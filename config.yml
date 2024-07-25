@@ -1,0 +1,220 @@
+# This is a sample model configuration file.
+# You can use this as a template to create your own model configuration file.
+
+#wandb login parameters. To be removed from here later
+PROJECT_NAME: "lab2/task4"
+USERNAME: "adeolajosepholoruntoba"
+API_KEY: ""
+
+use_wandb: True
+num_images_to_log: 1
+input_shape: [3, 32, 32] # [channels, height, width].
+# input_shape: [1,28,28]
+num_classes: 10
+verbose: True
+conv_layer_to_vis: None #'conv1'
+log_interval: 50
+log_images: False
+visualize_incorrect: False
+num_incorrect_to_visualize: 1
+
+hyperparameters:
+  batch_size: 32
+  num_epochs: 10
+  patience: 10
+  # loss_function: CrossEntropyLoss
+  loss_function: MulticlassHingeLoss
+  optimizer:
+    type: Adam
+    params: 
+      lr: 0.001 #0.01 #Initial learning rate
+      weight_decay: 0.0001
+  lr_policy: {1: 1e-3, 5: 1e-4} #{1: 1e-1, 3: 1e-2, 5: 1e-3, 7: 1e-4}
+  mode: 'Train' #whether to train or validate or certain dataset
+  resume: True  # resume training from the last checkpoint, 
+  use_scheduler: False
+  save_best_model: False
+
+
+architecture:
+  conv1: {type: Conv2d, in_channels: 3, out_channels: 64, kernel_size: 5, padding: 2}
+  batchnorm1: {type: BatchNorm2d, num_features: 64}
+  relu1: {type: ReLU}
+  maxpool1: {type: MaxPool2d, kernel_size: 3, stride: 2}
+  conv2: {type: Conv2d, in_channels: 64, out_channels: 128, kernel_size: 5, padding: 2}
+  batchnorm2: {type: BatchNorm2d, num_features: 128}
+  relu2: {type: ReLU}
+  maxpool2: {type: MaxPool2d, kernel_size: 3, stride: 2}
+  conv3: {type: Conv2d, in_channels: 128, out_channels: 256, kernel_size: 3, padding: 1}
+  batchnorm3: {type: BatchNorm2d, num_features: 256}
+  relu3: {type: ReLU}
+  maxpool3: {type: MaxPool2d, kernel_size: 2, stride: 2}
+  conv4: {type: Conv2d, in_channels: 256, out_channels: 256, kernel_size: 3, padding: 1}
+  batchnorm4: {type: BatchNorm2d, num_features: 256}
+  relu4: {type: ReLU}
+  maxpool4: {type: MaxPool2d, kernel_size: 2, stride: 2}
+  flatten: {type: Flatten}
+  fc1: {type: Linear, out_features: 1024}
+  relu5: {type: ReLU}
+  dropout1: {type: Dropout, p: 0.5}
+  fc2: {type: Linear, out_features: 512}
+  relu6: {type: ReLU}
+  dropout2: {type: Dropout, p: 0.5}
+  fc3: {type: Linear, out_features: 256}
+  relu7: {type: ReLU}
+  dropout3: {type: Dropout, p: 0.5}
+  fc4: {type: Linear, out_features: 128}
+  relu8: {type: ReLU}
+  fc5: {type: Linear, out_features: 10}
+
+
+
+
+
+# ----------------------MAIN ---------------------
+# architecture:
+#   conv1: {type: Conv2d, in_channels: 3, out_channels: 16, kernel_size: 5, padding: 2}
+#   relu1: {type: ReLU}
+#   maxpool1: {type: MaxPool2d, kernel_size: 3, stride: 2}
+#   conv2: {type: Conv2d, in_channels: 16, out_channels: 32, kernel_size: 5, padding: 2}
+#   relu2: {type: ReLU}
+#   maxpool2: {type: MaxPool2d, kernel_size: 3, stride: 2}
+#   flatten: {type: Flatten}
+#   fc1: {type: Linear, out_features: 256}
+#   relu3: {type: ReLU}
+#   fc2: {type: Linear, out_features: 128}
+#   relu4: {type: ReLU}
+#   fc3: {type: Linear, out_features: 10}
+
+
+
+#--------------------- DEEP1 ------------------------
+# architecture:
+#   conv1: {type: Conv2d, in_channels: 3, out_channels: 64, kernel_size: 5, padding: 2}
+#   relu1: {type: ReLU}
+#   maxpool1: {type: MaxPool2d, kernel_size: 3, stride: 2}
+#   conv2: {type: Conv2d, in_channels: 64, out_channels: 128, kernel_size: 5, padding: 2}
+#   relu2: {type: ReLU}
+#   maxpool2: {type: MaxPool2d, kernel_size: 3, stride: 2}
+#   conv3: {type: Conv2d, in_channels: 128, out_channels: 128, kernel_size: 3, padding: 1}
+#   relu3: {type: ReLU}
+#   maxpool3: {type: MaxPool2d, kernel_size: 2, stride: 2}
+#   flatten: {type: Flatten}
+#   fc1: {type: Linear, out_features: 1024}
+#   relu4: {type: ReLU}
+#   dropout1: {type: Dropout, p: 0.5}
+#   fc2: {type: Linear, out_features: 512}
+#   relu5: {type: ReLU}
+#   dropout2: {type: Dropout, p: 0.5}
+#   fc3: {type: Linear, out_features: 256}
+#   relu6: {type: ReLU}
+#   fc4: {type: Linear, out_features: 128}
+#   relu7: {type: ReLU}
+#   fc5: {type: Linear, out_features: 10}
+
+
+
+# -------------------- DEEP2 --------------------
+# architecture:
+#   conv1: {type: Conv2d, in_channels: 3, out_channels: 64, kernel_size: 5, padding: 2}
+#   batchnorm1: {type: BatchNorm2d, num_features: 64}
+#   relu1: {type: ReLU}
+#   maxpool1: {type: MaxPool2d, kernel_size: 3, stride: 2}
+#   conv2: {type: Conv2d, in_channels: 64, out_channels: 128, kernel_size: 5, padding: 2}
+#   batchnorm2: {type: BatchNorm2d, num_features: 128}
+#   relu2: {type: ReLU}
+#   maxpool2: {type: MaxPool2d, kernel_size: 3, stride: 2}
+#   conv3: {type: Conv2d, in_channels: 128, out_channels: 256, kernel_size: 3, padding: 1}
+#   batchnorm3: {type: BatchNorm2d, num_features: 256}
+#   relu3: {type: ReLU}
+#   maxpool3: {type: MaxPool2d, kernel_size: 2, stride: 2}
+#   conv4: {type: Conv2d, in_channels: 256, out_channels: 256, kernel_size: 3, padding: 1}
+#   batchnorm4: {type: BatchNorm2d, num_features: 256}
+#   relu4: {type: ReLU}
+#   maxpool4: {type: MaxPool2d, kernel_size: 2, stride: 2}
+#   flatten: {type: Flatten}
+#   fc1: {type: Linear, out_features: 1024}
+#   relu5: {type: ReLU}
+#   dropout1: {type: Dropout, p: 0.5}
+#   fc2: {type: Linear, out_features: 512}
+#   relu6: {type: ReLU}
+#   dropout2: {type: Dropout, p: 0.5}
+#   fc3: {type: Linear, out_features: 256}
+#   relu7: {type: ReLU}
+#   dropout3: {type: Dropout, p: 0.5}
+#   fc4: {type: Linear, out_features: 128}
+#   relu8: {type: ReLU}
+#   fc5: {type: Linear, out_features: 10}
+
+
+# architecture:
+#   conv1: {type: Conv2d, in_channels: 3, out_channels: 32, kernel_size: 5, padding: 2}
+#   relu1: {type: ReLU}
+#   maxpool1: {type: MaxPool2d, kernel_size: 3, stride: 2}
+#   conv2: {type: Conv2d, in_channels: 32, out_channels: 64, kernel_size: 5, padding: 2}
+#   relu2: {type: ReLU}
+#   maxpool2: {type: MaxPool2d, kernel_size: 3, stride: 2}
+#   flatten: {type: Flatten}
+#   fc1: {type: Linear, out_features: 512}
+#   relu3: {type: ReLU}
+#   fc2: {type: Linear, out_features: 256}
+#   relu4: {type: ReLU}
+#   fc3: {type: Linear, out_features: 128}
+#   relu5: {type: ReLU}
+#   fc4: {type: Linear, out_features: 10}
+
+
+
+# # architecture:
+#   conv1: {type: Conv2d, in_channels: 3, out_channels: 16, kernel_size: 5, padding: 2}
+#   relu1: {type: ReLU}
+#   maxpool1: {type: MaxPool2d, kernel_size: 2, stride: 2}
+#   conv2: {type: Conv2d, in_channels: 16, out_channels: 32, kernel_size: 5, padding: 2}
+#   relu2: {type: ReLU}
+#   maxpool2: {type: MaxPool2d, kernel_size: 2, stride: 2}
+#   flatten: {type: Flatten}
+#   fc1: {type: Linear, out_features: 512}
+#   relu3: {type: ReLU}
+#   fc_logits: {type: Linear, out_features: 10}
+
+
+# architecture:
+#   conv1: {type: Conv2d, in_channels: 1, out_channels: 16, kernel_size: 5, padding: 2}
+#   relu1: {type: ReLU}
+#   maxpool1: {type: MaxPool2d, kernel_size: 2, stride: 2}
+#   conv2: {type: Conv2d, in_channels: 16, out_channels: 32, kernel_size: 5, padding: 2}
+#   relu2: {type: ReLU}
+#   maxpool2: {type: MaxPool2d, kernel_size: 2, stride: 2}
+#   flatten: {type: Flatten}
+#   fc1: {type: Linear, out_features: 512}
+#   relu3: {type: ReLU}
+#   fc_logits: {type: Linear, out_features: 10}
+
+# hyperparameters:
+#   batch_size: 32
+#   num_epochs: 10
+#   patience: 10
+#   # loss_function: CrossEntropyLoss
+#   loss_function: MulticlassHingeLoss
+#   optimizer:
+#     type: Adam
+#     params: 
+#       lr: 0.001 #0.01 #Initial learning rate
+#       weight_decay: 0.0001
+#   lr_policy: {1: 1e-3, 5: 1e-4} #{1: 1e-1, 3: 1e-2, 5: 1e-3, 7: 1e-4}
+#   mode: 'Train' #whether to train or validate or certain dataset
+#   resume: True  # resume training from the last checkpoint, 
+#   use_scheduler: False
+#   save_best_model: False
+
+
+
+# architecture:
+#   conv1: {type: Conv2d, out_channels: 16, kernel_size: 3, padding: 1}
+#   relu1: {type: ReLU}
+#   maxpool1: {type: MaxPool2d, kernel_size: 2, stride: 2}
+#   conv2: {type: Conv2d, out_channels: 16, kernel_size: 3, padding: 1}
+#   flatten: {type: Flatten}
+#   fc1: {type: Linear, out_features: 128}
+#   relu2: {type: ReLU}
+#   fc2: {type: Linear, out_features: 10}
